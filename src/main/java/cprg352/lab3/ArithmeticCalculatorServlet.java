@@ -20,18 +20,9 @@ public class ArithmeticCalculatorServlet extends HttpServlet {
         String secondInput = request.getParameter("num2");
         String operation = request.getParameter("operation");
 
-        // set the attributes in the request
-        request.setAttribute("first", firstInput);
-        request.setAttribute("second", secondInput);
-        request.setAttribute("operation", operation);
         // validate the input and forward the request and response objects to the JSP
-        if (firstInput == null || firstInput.equals("") || secondInput == null || secondInput.equals("")) {
+        if (firstInput == null || firstInput.equals("") || secondInput == null || secondInput.equals("") || !firstInput.matches("[0-9]+") || !secondInput.matches("[0-9]+")) {
             request.setAttribute("result", "Invalid");
-            getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp").forward(request, response);
-        }
-        else if(!firstInput.matches("[0-9]+") || !secondInput.matches("[0-9]+")) {
-            request.setAttribute("result", "Invalid");
-            getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp").forward(request, response);
         }
         else {
             int first = Integer.parseInt(firstInput);
@@ -52,10 +43,10 @@ public class ArithmeticCalculatorServlet extends HttpServlet {
                     break;
             }
             request.setAttribute("result", result);
-//            request.setAttribute("num1", first);
-//            request.setAttribute("num2", second);
+        }
+            request.setAttribute("num1", firstInput);
+            request.setAttribute("num2", secondInput);
             getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp").forward(request, response);
             return;
-        }
     }
 }
